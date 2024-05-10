@@ -118,6 +118,11 @@ input[type=text] {
   background-color: #ec554f;
 }
 
+.add-minus-food .minus.disabled {
+  pointer-events: none;
+  background-color: #ccc;
+}
+
 .add-minus-food .circle-btn img {
   width: 10px;
   display: block;

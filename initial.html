@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
+    <title>Bill Split</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            Bill Split
+        </header>
+
+        <!-- diners -->
+        <section class="diners">
+
+            <div class="title-header for-diners">
+                Diners
+            </div>
+
+            <div class="diners-list">
+
+                <!-- diner -->
+                <section class="diner">
+
+                    <div class="name">
+                        <input type="text" placeholder="Name">
+                    </div>
+
+                    <!-- item list -->
+                    <div class="item-list">
+
+                        <!-- item -->
+                        <div class="item">
+
+                            <!-- food name -->
+                            <div class="food-name">
+                                <input type="text" placeholder="Food">
+                            </div>
+                            <!-- /food name -->
+
+                            <!-- price -->
+                            <div class="price">
+                                <input type="text" placeholder="Price*">
+                            </div>
+                            <div class="add-minus-food">
+                                <div class="circle-btn plus"><img src="images/icon-plus.svg" alt=""></div>
+                                <div class="circle-btn minus disabled"><img src="images/icon-minus.svg" alt=""></div>
+                            </div>
+                            <!-- /price -->
+
+                        </div>
+                        <!-- item -->
+
+                    </div>
+                    <!-- /item list-->
+
+                    <div class="add-diner">
+                        <div class="button">Add Diner</div>
+                    </div>
+
+                </section>
+                <!-- /diner -->
+
+            </div>
+
+        </section>
+        <!-- /diners -->
+
+        <!-- sharing plates -->
+        <section class="sharing-plates">
+
+            <div class="title-header">
+                Sharing Plates
+            </div>
+
+            <!-- item list -->
+            <div class="sharing-list">
+
+                <!-- item -->
+                <div class="item">
+
+                    <!-- food name -->
+                    <div class="food-name">
+                        <input type="text" placeholder="Food">
+                    </div>
+                    <!-- /food name -->
+
+                    <!-- price -->
+                    <div class="price">
+                        <input type="text" placeholder="Price*">
+                    </div>
+                    <div class="add-minus-food">
+                        <div class="circle-btn plus"><img src="images/icon-plus.svg" alt=""></div>
+                        <div class="circle-btn minus disabled"><img src="images/icon-minus.svg" alt=""></div>
+                    </div>
+                    <!-- /price -->
+
+                </div>
+                <!-- item -->
+
+            </div>
+            <!-- /item list-->
+
+        </section>
+        <!-- /sharing plates -->
+
+        <!-- taxes -->
+        <section class="taxes">
+
+            <div class="title-header">
+                Taxes
+            </div>
+
+            <div class="taxes-list">
+                <div class="item">
+                    <input type="checkbox"> GST (9%)
+                </div>
+                <div class="item">
+                    <input type="checkbox"> Service Charge (10%)
+                </div>
+            </div>
+
+        </section>
+        <!-- /taxes -->
+
+        <section class="results">
+
+            <div class="item title-header">
+                <div class="name">Name</div>
+                <div class="total">Total</div>
+            </div>
+
+            <div class="item">
+                <div class="name">NIL</div>
+                <div class="total">NIL</div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
