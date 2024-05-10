@@ -1,0 +1,30 @@
+/* Extra small devices (portrait phones, less than 576px)
+/* No media query for `xs` since this is the default in Bootstrap
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+	.viewport:after {
+		content: 'SM, 576px and above';
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	.viewport:after {
+		content: 'MD, 768px and above';
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.viewport:after {
+		content: 'LG, 992px and above';
+	}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+	.viewport:after {
+		content: 'XL, 1200px and above';
+	}
+}
