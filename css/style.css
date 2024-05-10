@@ -51,7 +51,7 @@ input[type=text] {
 .add-minus-food {
   display: flex;
   align-items: center;
-  width: 10%;
+  width: 55px;
   gap: 0 5px;
 }
 
@@ -90,11 +90,11 @@ input[type=text] {
 }
 
 .food-name {
-  width: 71%;
+  width: calc(64% - 55px);
 }
 
 .price {
-  width: 15%;
+  width: calc(47% - 55px);
 }
 
 .add-minus-food .circle-btn {
@@ -191,5 +191,5 @@ input[type=text] {
 }
 
 .results .item .total {
-  width: 50%;
+  width: 39%;
 }
