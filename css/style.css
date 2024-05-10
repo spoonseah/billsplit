@@ -90,7 +90,7 @@ input[type=text] {
 }
 
 .food-name {
-  width: calc(64% - 55px);
+  width: calc(59% - 55px);
 }
 
 .price {
