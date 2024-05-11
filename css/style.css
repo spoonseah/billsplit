@@ -177,9 +177,10 @@ input[type=text] {
   margin-top: 20px;
 }
 
-.results .item.title-header {
+.results .title-header {
   color: #333;
   padding: 0 10px;
+  display: flex;
 }
 
 .results .item {
@@ -191,10 +192,12 @@ input[type=text] {
   background-color: #ededed;
 }
 
-.results .item .name {
+.results .item .name,
+.results .title-header .name {
   width: 50%;
 }
 
-.results .item .total {
+.results .item .total,
+.results .title-header .total {
   width: 39%;
 }
