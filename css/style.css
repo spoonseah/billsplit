@@ -110,15 +110,18 @@ input[type=text] {
   background-color: #6ec757;
 }
 
-.plus-minus-food .add {
+.plus-minus-food .indiv-plus,
+.plus-minus-food .sharing-plus {
   background-color: #6ec757;
 }
 
-.plus-minus-food .minus {
+.plus-minus-food .indiv-minus,
+.plus-minus-food .sharing-minus {
   background-color: #ec554f;
 }
 
-.plus-minus-food .minus.disabled {
+.plus-minus-food .indiv-minus.disabled,
+.plus-minus-food .sharing-minus.disabled {
   pointer-events: none;
   background-color: #ccc;
 }
@@ -130,7 +133,7 @@ input[type=text] {
 
 .diners .add-diner {
   background-color: #fff;
-  margin: 20px -15px -15px -15px;
+  margin: 0px 0px 20px -15px;
   text-align: right;
   cursor: pointer;
 }
