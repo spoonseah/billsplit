@@ -48,7 +48,7 @@ input[type=text] {
   flex-wrap: wrap;
 }
 
-.add-minus-food {
+.plus-minus-food {
   display: flex;
   align-items: center;
   width: 55px;
@@ -97,7 +97,7 @@ input[type=text] {
   width: calc(47% - 55px);
 }
 
-.add-minus-food .circle-btn {
+.plus-minus-food .circle-btn {
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -110,32 +110,32 @@ input[type=text] {
   background-color: #6ec757;
 }
 
-.add-minus-food .add {
+.plus-minus-food .add {
   background-color: #6ec757;
 }
 
-.add-minus-food .minus {
+.plus-minus-food .minus {
   background-color: #ec554f;
 }
 
-.add-minus-food .minus.disabled {
+.plus-minus-food .minus.disabled {
   pointer-events: none;
   background-color: #ccc;
 }
 
-.add-minus-food .circle-btn img {
+.plus-minus-food .circle-btn img {
   width: 10px;
   display: block;
 }
 
-.diner .add-diner {
+.diners .add-diner {
   background-color: #fff;
   margin: 20px -15px -15px -15px;
   text-align: right;
   cursor: pointer;
 }
 
-.diner .add-diner .button {
+.diners .add-diner .button {
   padding: 10px 15px;
   background-color: #6ec757;
   display: inline-block;
