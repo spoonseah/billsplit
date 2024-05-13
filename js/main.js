@@ -6,7 +6,7 @@ let numOfDiners = 1;
 let currDiner = 0;
 
 // sharing plates data
-let numOfSharingPlates = 0;
+let numOfSharingPlates = 1;
 
 // sharing plates data
 
@@ -93,10 +93,45 @@ function addDiner(numOfDiners) {
     dinersList.appendChild(currDinerSection);
 }
 
-// add new sharing plate
-function addNewSharingPlate() {
+function plusSharedPlate(numOfSharingPlates) {
+    const sharingList = document.querySelector(".sharing-list");
 
+    htmlToBeAdded = `
+    <!-- item -->
+    <div class="item" id="item-${numOfSharingPlates}">
+
+        <!-- food name -->
+        <div class="food-name">
+            <input type="text" placeholder="Food">
+        </div>
+        <!-- /food name -->
+
+        <!-- price -->
+        <div class="price">
+            <input type="text" placeholder="Price*">
+        </div>
+        <div class="plus-minus-sharing">
+            <div class="circle-btn sharing-plus sharing-${numOfSharingPlates}"><img src="images/icon-plus.svg" alt=""></div>
+            <div class="circle-btn sharing-minus disabled sharing-${numOfSharingPlates}"><img src="images/icon-minus.svg" alt=""></div>
+        </div>
+        <!-- /price -->
+
+    </div>
+    <!-- item -->
+    `;
+    sharingList.innerHTML += htmlToBeAdded;
 }
+
+// document.addEventListener("input", () => {
+// })
+
+document.addEventListener("click", (event) => {
+    // click on plus shared plate button
+    if (event.target.classList.contains("sharing-plus") || event.target.parentNode.classList.contains("sharing-plus")) {
+        numOfSharingPlates++;
+        plusSharedPlate(numOfSharingPlates);
+    }
+})
 
 addDinerBtn.addEventListener("click", () => {
     numOfDiners++;

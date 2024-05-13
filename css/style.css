@@ -48,7 +48,8 @@ input[type=text] {
   flex-wrap: wrap;
 }
 
-.plus-minus-food {
+.plus-minus-indiv,
+.plus-minus-sharing {
   display: flex;
   align-items: center;
   width: 55px;
@@ -97,7 +98,8 @@ input[type=text] {
   width: calc(47% - 55px);
 }
 
-.plus-minus-food .circle-btn {
+.plus-minus-indiv .circle-btn,
+.plus-minus-sharing .circle-btn {
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -110,23 +112,24 @@ input[type=text] {
   background-color: #6ec757;
 }
 
-.plus-minus-food .indiv-plus,
-.plus-minus-food .sharing-plus {
+.plus-minus-indiv .indiv-plus,
+.plus-minus-sharing .sharing-plus {
   background-color: #6ec757;
 }
 
-.plus-minus-food .indiv-minus,
-.plus-minus-food .sharing-minus {
+.plus-minus-indiv .indiv-minus,
+.plus-minus-sharing .sharing-minus {
   background-color: #ec554f;
 }
 
-.plus-minus-food .indiv-minus.disabled,
-.plus-minus-food .sharing-minus.disabled {
+.plus-minus-indiv .indiv-minus.disabled,
+.plus-minus-sharing .sharing-minus.disabled {
   pointer-events: none;
   background-color: #ccc;
 }
 
-.plus-minus-food .circle-btn img {
+.plus-minus-indiv .circle-btn img,
+.plus-minus-sharing .circle-btn img{
   width: 10px;
   display: block;
 }
