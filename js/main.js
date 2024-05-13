@@ -7,8 +7,7 @@ let currDiner = 0;
 
 // sharing plates data
 let numOfSharingPlates = 1;
-
-// sharing plates data
+const sharingList = document.querySelector(".sharing-list");
 
 // tax rates data
 const gst = 9;
@@ -94,9 +93,7 @@ function addDiner(numOfDiners) {
 }
 
 function plusSharedPlate(numOfSharingPlates) {
-    const sharingList = document.querySelector(".sharing-list");
-
-    htmlToBeAdded = `
+    newSharingPlateDiv = `
     <!-- item -->
     <div class="item" id="item-${numOfSharingPlates}">
 
@@ -119,7 +116,19 @@ function plusSharedPlate(numOfSharingPlates) {
     </div>
     <!-- item -->
     `;
-    sharingList.innerHTML += htmlToBeAdded;
+
+    sharingList.innerHTML += newSharingPlateDiv;
+
+    const minusBtns = document.querySelectorAll(".circle-btn.sharing-minus");
+    
+    minusBtns.forEach((minusBtn) => {
+        if (numOfSharingPlates > 1) {
+            minusBtn.classList.remove("disabled");
+        } else {
+            minusBtn.classList.add("disabled");
+        }
+        console.log(minusBtn);
+    });
 }
 
 // document.addEventListener("input", () => {
