@@ -207,3 +207,7 @@ input[type=text] {
 .results .title-header .total {
   width: 39%;
 }
+
+.indiv-list {
+  margin-top: 12px;
+}
