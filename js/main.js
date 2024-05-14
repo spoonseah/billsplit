@@ -93,13 +93,32 @@ function addDiner(numOfDiners) {
 }
 
 function plusSharedPlate(clickedSharingPlusID) {
+    console.log(`clickedSharingPlusID: ${clickedSharingPlusID}`);
+    console.log(`numOfSharingPlates: ${numOfSharingPlates}`);
+
+
+    // clicked one is not in the last row, new row to be inserted in between
+    if (clickedSharingPlusID + 1 < numOfSharingPlates) {
+        // for all rows after the clicked row, move them back
+        for (let i = numOfSharingPlates - 1; i > clickedSharingPlusID; i--) {
+            console.log(`i: ${i}`);
+            const divToMove = document.querySelector(`#sharing-${i}`);
+            divToMove.id = `sharing-${i + 1}`;
+            
+            const classesToMove = divToMove.querySelectorAll(`.sharing-${i}`);
+            classesToMove.forEach(e => {
+                e.classList.replace(`sharing-${i}`, `sharing-${i + 1}`);
+            });
+        }
+    }
+
     // sharing list
     const sharingListDiv = document.querySelector(".sharing-list");
 
     // item
     const newSharingPlateDiv = document.createElement("div");
     newSharingPlateDiv.className = "item";
-    newSharingPlateDiv.id = `item ${clickedSharingPlusID + 1}`;
+    newSharingPlateDiv.id = `sharing-${clickedSharingPlusID + 1}`;
 
     // food name
     const foodNameDiv = document.createElement("div");
@@ -121,13 +140,14 @@ function plusSharedPlate(clickedSharingPlusID) {
 
     // plus minus sharing
     const plusMinusSharingBtnsDiv = document.createElement("div");
-    plusMinusSharingBtnsDiv.className = "plus-minus-sharing";
+    plusMinusSharingBtnsDiv.className = `plus-minus-sharing sharing-${clickedSharingPlusID + 1}`;
     // plus button
     const plusSharingBtn = document.createElement("div");
     plusSharingBtn.className = `circle-btn sharing-plus sharing-${clickedSharingPlusID + 1}`;
     const plusSharingImg = document.createElement("img");
     plusSharingImg.src = "images/icon-plus.svg";
     plusSharingImg.alt = "";
+    plusSharingImg.className = `sharing-plus sharing-${clickedSharingPlusID + 1}`;
     plusSharingBtn.appendChild(plusSharingImg);
     // minus button
     const minusSharingBtn = document.createElement("div");
@@ -135,6 +155,7 @@ function plusSharedPlate(clickedSharingPlusID) {
     const minusSharingImg = document.createElement("img");
     minusSharingImg.src = "images/icon-minus.svg";
     minusSharingImg.alt = "";
+    minusSharingImg.className = `sharing-minus sharing-${clickedSharingPlusID + 1}`;
     minusSharingBtn.appendChild(minusSharingImg);
     // append plus and minus to the div
     plusMinusSharingBtnsDiv.appendChild(plusSharingBtn);
@@ -144,8 +165,9 @@ function plusSharedPlate(clickedSharingPlusID) {
     newSharingPlateDiv.appendChild(foodPriceDiv);
     newSharingPlateDiv.appendChild(plusMinusSharingBtnsDiv);
 
-    // append new sharing plate to sharing list
-    sharingListDiv.appendChild(newSharingPlateDiv);
+    const refNode = document.querySelector(`#sharing-${clickedSharingPlusID + 2}`);
+    console.log(refNode);
+    sharingListDiv.insertBefore(newSharingPlateDiv, refNode);
 
     // enable minus buttons
     const minusBtns = document.querySelectorAll(".circle-btn.sharing-minus");
@@ -166,16 +188,19 @@ function plusSharedPlate(clickedSharingPlusID) {
 // })
 
 document.addEventListener("click", (event) => {
-    
-    if (    // click on plus shared plate button
-        event.target.classList.contains("sharing-plus") ||
-        event.target.parentNode.classList.contains("sharing-plus")
-    ) {
+    const clickedSharingPlusID = event.target.classList.contains("sharing-plus")
+        ? parseInt(event.target.className.split("-").pop())
+        : event.target.parentNode.classList.contains("sharing-plus")
+        ? parseInt(event.target.parentNode.className.split("-").pop())
+        : null;
+
+    if (clickedSharingPlusID !== null) {
         numOfSharingPlates++;
-        const clickedSharingPlusID = parseInt(event.target.className.split("sharing-").pop());
         plusSharedPlate(clickedSharingPlusID);
+        return;
     }
-})
+});
+
 
 addDinerBtn.addEventListener("click", () => {
     numOfDiners++;
