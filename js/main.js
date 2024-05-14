@@ -93,15 +93,10 @@ function addDiner(numOfDiners) {
 }
 
 function plusSharedPlate(clickedSharingPlusID) {
-    console.log(`clickedSharingPlusID: ${clickedSharingPlusID}`);
-    console.log(`numOfSharingPlates: ${numOfSharingPlates}`);
-
-
-    // clicked one is not in the last row, new row to be inserted in between
+    // if clicked one is not in the last row, new row to be inserted in between
     if (clickedSharingPlusID + 1 < numOfSharingPlates) {
         // for all rows after the clicked row, move them back
         for (let i = numOfSharingPlates - 1; i > clickedSharingPlusID; i--) {
-            console.log(`i: ${i}`);
             const divToMove = document.querySelector(`#sharing-${i}`);
             divToMove.id = `sharing-${i + 1}`;
             
@@ -135,7 +130,7 @@ function plusSharedPlate(clickedSharingPlusID) {
     // input
     const foodPriceInput = document.createElement("input");
     foodPriceInput.type = "text";
-    foodPriceInput.placeholder = "Price";
+    foodPriceInput.placeholder = "Price*";
     foodPriceDiv.appendChild(foodPriceInput);
 
     // plus minus sharing
@@ -166,10 +161,34 @@ function plusSharedPlate(clickedSharingPlusID) {
     newSharingPlateDiv.appendChild(plusMinusSharingBtnsDiv);
 
     const refNode = document.querySelector(`#sharing-${clickedSharingPlusID + 2}`);
-    console.log(refNode);
     sharingListDiv.insertBefore(newSharingPlateDiv, refNode);
 
     // enable minus buttons
+    const minusBtns = document.querySelectorAll(".circle-btn.sharing-minus");
+    minusBtns.forEach((minusBtn) => {
+        minusBtn.classList.remove("disabled");
+    });
+}
+
+function minusSharedPlate(clickedSharingMinusID) {
+    // get the section to be deleted
+    const removeSharingPlateDiv = document.querySelector(`#sharing-${clickedSharingMinusID}`);
+    removeSharingPlateDiv.remove();
+
+    // if clicked one is not in the last row, move the other rows forward
+    if (clickedSharingMinusID < numOfSharingPlates + 1) {
+        for (let i = clickedSharingMinusID + 1; i <= numOfSharingPlates + 1; i++) {
+            const divToMove = document.querySelector(`#sharing-${i}`);
+            divToMove.id = `sharing-${i - 1}`;
+
+            const classesToMove = divToMove.querySelectorAll(`.sharing-${i}`);
+            classesToMove.forEach(e => {
+                e.classList.replace(`sharing-${i}`, `sharing-${i - 1}`);
+            });
+        }
+    }
+
+    // disable minus buttons if only 1 sharing plate is left
     const minusBtns = document.querySelectorAll(".circle-btn.sharing-minus");
     minusBtns.forEach((minusBtn) => {
         if (numOfSharingPlates > 1) {
@@ -180,23 +199,32 @@ function plusSharedPlate(clickedSharingPlusID) {
     });
 }
 
-// function minusSharedPlates() {
-
-// }
-
 // document.addEventListener("input", () => {
 // })
 
 document.addEventListener("click", (event) => {
+
+    // plus sharing
     const clickedSharingPlusID = event.target.classList.contains("sharing-plus")
         ? parseInt(event.target.className.split("-").pop())
         : event.target.parentNode.classList.contains("sharing-plus")
         ? parseInt(event.target.parentNode.className.split("-").pop())
         : null;
-
     if (clickedSharingPlusID !== null) {
         numOfSharingPlates++;
         plusSharedPlate(clickedSharingPlusID);
+        return;
+    }
+
+    // minus sharing
+    const clickedSharingMinusID = event.target.classList.contains("sharing-minus")
+        ? parseInt(event.target.className.split("-").pop())
+        : event.target.parentNode.classList.contains("sharing-minus")
+        ? parseInt(event.target.parentNode.className.split("-").pop())
+        : null;
+    if (clickedSharingMinusID !== null) {
+        numOfSharingPlates--;
+        minusSharedPlate(clickedSharingMinusID);
         return;
     }
 });
