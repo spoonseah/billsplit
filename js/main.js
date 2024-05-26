@@ -3,7 +3,8 @@ const dinersList = document.querySelector(".diners-list");
 
 // individual diner data
 let numOfDiners = 1;
-let currDiner = 0;
+let numOfItemsPerDiner = {1: 1}; // track the number of items for each diner
+let indivDict = {};
 
 // sharing plates data
 let numOfSharingPlates = 1;
@@ -56,17 +57,17 @@ function addDiner(numOfDiners) {
 
     // plus and minus buttons
     const plusMinusBtnsDiv = document.createElement("div");
-    plusMinusBtnsDiv.className = "plus-minus-food";
+    plusMinusBtnsDiv.className = "plus-minus-indiv";
     // plus button
     const plusBtn = document.createElement("div");
-    plusBtn.className = `circle-btn plus diner-${numOfDiners}`;
+    plusBtn.className = `circle-btn indiv-plus diner-${numOfDiners} item-1`;
     const plusImg = document.createElement("img");
     plusImg.src = "images/icon-plus.svg";
     plusImg.alt = "";
     plusBtn.appendChild(plusImg);
     // minus button
     const minusBtn = document.createElement("div");
-    minusBtn.className = `circle-btn minus disabled diner-${numOfDiners}`;
+    minusBtn.className = `circle-btn indiv-minus disabled diner-${numOfDiners} item-1`;
     const minusImg = document.createElement("img");
     minusImg.src = "images/icon-minus.svg";
     minusImg.alt = "";
@@ -90,6 +91,63 @@ function addDiner(numOfDiners) {
 
     // append individual diner to overall diners section
     dinersList.appendChild(currDinerSection);
+
+    // initialise number of items for this diner
+    numOfItemsPerDiner[numOfDiners] = 1;
+}
+
+function plusIndivPlate(dinerId, itemId) {
+    const currDinerDiv = document.querySelector(`#diner-${dinerId}`);
+    const currDinerIndivListDiv = currDinerDiv.querySelector(`.indiv-list`);
+
+    // new item div
+    const currItemDiv = document.createElement("div");
+    currItemDiv.classList = `item diner-${dinerId} item-${itemId + 1}`;
+
+    // food name div
+    const foodNameDiv = document.createElement("div");
+    foodNameDiv.className = "food-name";
+    const foodNameInput = document.createElement("input");
+    foodNameInput.type = "text";
+    foodNameInput.placeholder = "Food";
+    foodNameDiv.appendChild(foodNameInput);
+
+    // price div
+    const foodPriceDiv = document.createElement("div");
+    foodPriceDiv.className = "price";
+    const foodPriceInput = document.createElement("input");
+    foodPriceInput.type = "text";
+    foodPriceInput.placeholder = "Price*";
+    foodPriceDiv.appendChild(foodPriceInput);
+
+    // plus minus indiv
+    const plusMinusIndivBtnsDiv = document.createElement("div");
+    plusMinusIndivBtnsDiv.className = `plus-minus-indiv`;
+    // plus button
+    const plusIndivBtn = document.createElement("div");
+    plusIndivBtn.className = `circle-btn indiv-plus diner-${dinerId} item-${itemId + 1}`;
+    const plusIndivImg = document.createElement("img");
+    plusIndivImg.src = "images/icon-plus.svg";
+    plusIndivImg.alt = "";
+    plusIndivImg.className = `indiv-plus diner-${dinerId} item-${itemId + 1}`;
+    plusIndivBtn.appendChild(plusIndivImg);
+    // minus button
+    const minusIndivBtn = document.createElement("div");
+    minusIndivBtn.className = `circle-btn indiv-minus diner-${dinerId} item-${itemId + 1}`;
+    const minusIndivImg = document.createElement("img");
+    minusIndivImg.src = "images/icon-minus.svg";
+    minusIndivImg.alt = "";
+    minusIndivImg.className = `indiv-minus diner-${dinerId} item-${itemId + 1}`;
+    minusIndivBtn.appendChild(minusIndivImg);
+    // append plus and minus to the div
+    plusMinusIndivBtnsDiv.appendChild(plusIndivBtn);
+    plusMinusIndivBtnsDiv.appendChild(minusIndivBtn);
+
+    currItemDiv.appendChild(foodNameDiv);
+    currItemDiv.appendChild(foodPriceDiv);
+    currItemDiv.appendChild(plusMinusIndivBtnsDiv);
+
+    currDinerIndivListDiv.appendChild(currItemDiv);
 }
 
 function plusSharedPlate(clickedSharingPlusID) {
@@ -203,28 +261,35 @@ function minusSharedPlate(clickedSharingMinusID) {
 // })
 
 document.addEventListener("click", (event) => {
+    // plus indiv
+    const clickedIndivPlus = event.target.closest(".indiv-plus");
+    if (clickedIndivPlus) {
+        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
+        plusIndivPlate(dinerId, itemId);
+    }
+
+    // minus indiv
+    const clickedIndivMinus = event.target.closest(".indiv-minus");
+    if (clickedIndivMinus) {
+        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
+        minusIndivPlate(dinerId);
+    }
 
     // plus sharing
-    const clickedSharingPlusID = event.target.classList.contains("sharing-plus")
-        ? parseInt(event.target.className.split("-").pop())
-        : event.target.parentNode.classList.contains("sharing-plus")
-        ? parseInt(event.target.parentNode.className.split("-").pop())
-        : null;
-    if (clickedSharingPlusID !== null) {
+    const clickedSharingPlus = event.target.closest(".sharing-plus");
+    if (clickedSharingPlus) {
+        const sharingId = parseInt(clickedSharingPlus.className.match(/sharing-(\d+)/)[1]);
         numOfSharingPlates++;
-        plusSharedPlate(clickedSharingPlusID);
+        plusSharedPlate(sharingId);
         return;
     }
 
     // minus sharing
-    const clickedSharingMinusID = event.target.classList.contains("sharing-minus")
-        ? parseInt(event.target.className.split("-").pop())
-        : event.target.parentNode.classList.contains("sharing-minus")
-        ? parseInt(event.target.parentNode.className.split("-").pop())
-        : null;
-    if (clickedSharingMinusID !== null) {
+    const clickedSharingMinus = event.target.closest(".sharing-minus");
+    if (clickedSharingMinus) {
+        const sharingId = parseInt(clickedSharingMinus.className.match(/sharing-(\d+)/)[1]);
         numOfSharingPlates--;
-        minusSharedPlate(clickedSharingMinusID);
+        minusSharedPlate(sharingId);
         return;
     }
 });
