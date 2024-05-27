@@ -115,7 +115,7 @@ function plusIndivPlate(dinerId, itemId) {
     numOfItemsPerDiner[dinerId]++;
 
     const currDinerIndivListDiv = document.querySelector(`#diner-${dinerId} .indiv-list`);
-    const newItemId = numOfItemsPerDiner[dinerId];
+    const newItemId = itemId + 1;
 
     // new item div
     const currItemDiv = document.createElement("div");
