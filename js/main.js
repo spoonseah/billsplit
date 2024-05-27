@@ -174,6 +174,37 @@ function plusIndivPlate(dinerId, itemId) {
     });
 }
 
+function minusIndivPlate(dinerId, itemId) {
+    numOfItemsPerDiner[dinerId]--;
+
+    // get the section to be deleted
+    const removeIndivPlateDiv = document.querySelector(`.item.diner-${dinerId}.item-${itemId}`);
+    removeIndivPlateDiv.remove();
+
+    // if removed section is not in last row, move other rows forward
+     if (itemId < numOfItemsPerDiner[dinerId] + 1) {
+        for (let i = itemId + 1; i <= numOfItemsPerDiner[dinerId] + 1; i++) {
+            const divToMove = document.querySelector(`.item.diner-${dinerId}.item-${i}`);
+            divToMove.classList = `item diner-${dinerId} item-${i - 1}`;
+            
+            const classesToMove = document.querySelectorAll(`.diner-${dinerId}.item-${i}`);
+            classesToMove.forEach(e => {
+                e.classList.replace(`item-${i}`, `item-${i - 1}`);
+            });
+        }
+     }
+
+    // toggle disabled state on minus button
+    const minusBtns = document.querySelectorAll(`.circle-btn.indiv-minus.diner-${dinerId}`);
+    minusBtns.forEach((minusBtn) => {
+        if (numOfItemsPerDiner[dinerId] > 1) {
+            minusBtn.classList.remove("disabled");
+        } else {
+            minusBtn.classList.add("disabled");
+        }
+    });
+}
+
 function plusSharedPlate(clickedSharingPlusID) {
     numOfSharingPlates++;
 
@@ -261,7 +292,7 @@ function minusSharedPlate(clickedSharingMinusID) {
     const removeSharingPlateDiv = document.querySelector(`#sharing-${clickedSharingMinusID}`);
     removeSharingPlateDiv.remove();
 
-    // if clicked one is not in the last row, move the other rows forward
+    // if removed section is not in last row, move other rows forward
     if (clickedSharingMinusID < numOfSharingPlates + 1) {
         for (let i = clickedSharingMinusID + 1; i <= numOfSharingPlates + 1; i++) {
             const divToMove = document.querySelector(`#sharing-${i}`);
@@ -274,7 +305,7 @@ function minusSharedPlate(clickedSharingMinusID) {
         }
     }
 
-    // disable minus buttons if only 1 sharing plate is left
+    // toggle disabled state on minus button
     const minusBtns = document.querySelectorAll(".circle-btn.sharing-minus");
     minusBtns.forEach((minusBtn) => {
         if (numOfSharingPlates > 1) {
@@ -299,8 +330,8 @@ document.addEventListener("click", (event) => {
     // minus indiv
     const clickedIndivMinus = event.target.closest(".indiv-minus");
     if (clickedIndivMinus) {
-        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
-        minusIndivPlate(dinerId);
+        const [_, dinerId, itemId] = clickedIndivMinus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
+        minusIndivPlate(dinerId, itemId);
     }
 
     // plus sharing
