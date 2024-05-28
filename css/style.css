@@ -32,7 +32,8 @@ header {
   margin: -15px -15px 0;
 }
 
-input[type=text] {
+input[type=text],
+input[type=number] {
   width: 100%;
   padding: 10px 15px;
   font-size: 14px;
@@ -189,21 +190,26 @@ input[type=text] {
   display: flex;
 }
 
-.results .item {
+.results-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.results .results-items .item {
   display: flex;
   padding: 10px;
 }
 
-.results .item:nth-of-type(even) {
+.results .results-items .item:nth-of-type(odd) {
   background-color: #ededed;
 }
 
-.results .item .name,
+.results .results-items .item .name,
 .results .title-header .name {
   width: 50%;
 }
 
-.results .item .total,
+.results .results-items .item .total,
 .results .title-header .total {
   width: 39%;
 }

@@ -4,7 +4,6 @@ const dinersList = document.querySelector(".diners-list");
 // individual diner data
 let numOfDiners = 1;
 let numOfItemsPerDiner = {1: 1}; // track the number of items for each diner
-let indivDict = {};
 
 // sharing plates data
 let numOfSharingPlates = 1;
@@ -51,7 +50,7 @@ function addDiner(numOfDiners) {
     const foodPriceDiv = document.createElement("div");
     foodPriceDiv.className = "price";
     const foodPriceInput = document.createElement("input");
-    foodPriceInput.type = "text";
+    foodPriceInput.type = "number";
     foodPriceInput.placeholder = "Price*";
     foodPriceDiv.appendChild(foodPriceInput);
 
@@ -133,7 +132,7 @@ function plusIndivPlate(dinerId, itemId) {
     const foodPriceDiv = document.createElement("div");
     foodPriceDiv.className = "price";
     const foodPriceInput = document.createElement("input");
-    foodPriceInput.type = "text";
+    foodPriceInput.type = "number";
     foodPriceInput.placeholder = "Price*";
     foodPriceDiv.appendChild(foodPriceInput);
 
@@ -244,7 +243,7 @@ function plusSharedPlate(clickedSharingPlusID) {
     foodPriceDiv.className = "price";
     // input
     const foodPriceInput = document.createElement("input");
-    foodPriceInput.type = "text";
+    foodPriceInput.type = "number";
     foodPriceInput.placeholder = "Price*";
     foodPriceDiv.appendChild(foodPriceInput);
 
@@ -316,8 +315,71 @@ function minusSharedPlate(clickedSharingMinusID) {
     });
 }
 
-// document.addEventListener("input", () => {
-// })
+function mapPlates() {
+    let dinerDict = new Map();
+
+    // get all diners' names
+    const dinerNames = document.querySelectorAll(".diner .name input");
+    dinerNames.forEach(dinerName => {
+        dinerDict.set(dinerName.value, []);
+    });
+
+    // get all diners' individual plates
+    for (let currDiner = 1; currDiner <= numOfDiners; currDiner++) {
+        const currDinerIndivPlates = document.querySelectorAll(`.item.diner-${currDiner}`);
+        currDinerIndivPlates.forEach(currDinerIndivPlate => {
+            const currPlatePrice = (currDinerIndivPlate.querySelector(".price input")).value;
+
+            // get diner name
+            const dinerName = (document.querySelector(`#diner-${currDiner} .name input`)).value;
+            if (dinerDict.has(dinerName)) {
+                dinerDict.get(dinerName).push(currPlatePrice);
+            }
+        })
+    }
+
+    displayResults(dinerDict);
+}
+
+function displayResults(dinerDict) {
+    const resultsSection = document.querySelector(".results .results-items");
+
+    // clear previous results
+    while (resultsSection.firstChild) {
+        resultsSection.removeChild(resultsSection.firstChild);
+    }
+
+    dinerDict.forEach((plates, dinerName) => {
+        // calculate total for indiv share
+        let indivTotal = plates.reduce(
+            (sum, price) => sum + parseFloat(price),
+            0,
+        ).toFixed(2);
+
+        if (isNaN(indivTotal)) indivTotal = "0.00";
+
+        // create new result row
+        const resultsItemDiv = document.createElement("div");
+        resultsItemDiv.className = "item";
+
+        const resultsItemName =  document.createElement("div");
+        resultsItemName.className = "name";
+        resultsItemName.textContent = dinerName;
+
+        const resultsItemTotal = document.createElement("div");
+        resultsItemTotal.className = "total";
+        resultsItemTotal.textContent = `$${indivTotal}`;
+
+        resultsItemDiv.appendChild(resultsItemName);
+        resultsItemDiv.appendChild(resultsItemTotal);
+        
+        resultsSection.appendChild(resultsItemDiv);
+    });
+}
+
+document.addEventListener("input", () => {
+    mapPlates();
+})
 
 document.addEventListener("click", (event) => {
     // plus indiv
@@ -352,7 +414,7 @@ document.addEventListener("click", (event) => {
 });
 
 
-addDinerBtn.addEventListener("click", () => {
+addDinerBtn.addEventListener("click", () => {    
     numOfDiners++;
     addDiner(numOfDiners);
 });
