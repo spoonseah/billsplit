@@ -374,6 +374,17 @@ function displayResults(sharedShare, dinerDict) {
             parseFloat(sharedShare),
         ).toFixed(2);
 
+        const gstCheckbox = document.querySelector("#gst");
+        const serviceChargeCheckbox = document.querySelector("#service-charge");
+
+        if (gstCheckbox.checked == true && serviceChargeCheckbox.checked == true) {
+            indivTotal = (indivTotal * (1 + gst/100) * (1 + serviceCharge/100)).toFixed(2);
+        } else if (gstCheckbox.checked == true) {
+            indivTotal = (indivTotal * (1 + gst/100)).toFixed(2);
+        } else if (serviceChargeCheckbox.checked == true) {
+            indivTotal = (indivTotal * (1 + serviceCharge/100)).toFixed(2);
+        }
+
 
         // create new result row
         const resultsItemDiv = document.createElement("div");
