@@ -338,10 +338,28 @@ function mapPlates() {
         })
     }
 
-    displayResults(dinerDict);
+    displayResults(calculateSharedShare(), dinerDict);
 }
 
-function displayResults(dinerDict) {
+function calculateSharedShare() {
+    let totalSharedPrice = 0;
+
+    // get all price input fields for shared plates
+    const sharedPlatePrices = document.querySelectorAll(".sharing-list .item .price input");
+    sharedPlatePrices.forEach(input => {
+        const price = input.value.trim();
+        if (price !== "") { 
+            totalSharedPrice += parseFloat(price);
+        }
+    });
+
+    // calculate share for each diner
+    const sharedShare = (totalSharedPrice / numOfDiners).toFixed(2);
+
+    return sharedShare;
+}
+
+function displayResults(sharedShare, dinerDict) {
     const resultsSection = document.querySelector(".results .results-items");
 
     // clear previous results
@@ -352,11 +370,10 @@ function displayResults(dinerDict) {
     dinerDict.forEach((plates, dinerName) => {
         // calculate total for indiv share
         let indivTotal = plates.reduce(
-            (sum, price) => sum + parseFloat(price),
-            0,
+            (sum, price) => sum + (price.trim() === '' ? 0 : parseFloat(price)),
+            parseFloat(sharedShare),
         ).toFixed(2);
 
-        if (isNaN(indivTotal)) indivTotal = "0.00";
 
         // create new result row
         const resultsItemDiv = document.createElement("div");
@@ -385,7 +402,7 @@ document.addEventListener("click", (event) => {
     // plus indiv
     const clickedIndivPlus = event.target.closest(".indiv-plus");
     if (clickedIndivPlus) {
-        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
+        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);        
         plusIndivPlate(dinerId, itemId);
     }
 
@@ -401,7 +418,6 @@ document.addEventListener("click", (event) => {
     if (clickedSharingPlus) {
         const sharingId = parseInt(clickedSharingPlus.className.match(/sharing-(\d+)/)[1]);
         plusSharedPlate(sharingId);
-        return;
     }
 
     // minus sharing
@@ -409,7 +425,6 @@ document.addEventListener("click", (event) => {
     if (clickedSharingMinus) {
         const sharingId = parseInt(clickedSharingMinus.className.match(/sharing-(\d+)/)[1]);
         minusSharedPlate(sharingId);
-        return;
     }
 });
 
