@@ -317,10 +317,13 @@ function minusSharedPlate(clickedSharingMinusID) {
 
 function mapPlates() {
     let dinerDict = new Map();
+    let currDinerCount = 0;
 
     // get all diners' names
     const dinerNames = document.querySelectorAll(".diner .name input");
     dinerNames.forEach(dinerName => {
+        currDinerCount++;
+        if (dinerName.value.trim() == "") dinerName.value = `Unnamed Diner ${currDinerCount}`;
         dinerDict.set(dinerName.value, []);
     });
 
