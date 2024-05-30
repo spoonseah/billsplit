@@ -130,7 +130,7 @@ input[type=number] {
 }
 
 .plus-minus-indiv .circle-btn img,
-.plus-minus-sharing .circle-btn img{
+.plus-minus-sharing .circle-btn img {
   width: 10px;
   display: block;
 }
@@ -216,4 +216,8 @@ input[type=number] {
 
 .indiv-list {
   margin-top: 12px;
+}
+
+.indiv-list .item {
+  margin-top: 10px;
 }
