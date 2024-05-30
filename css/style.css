@@ -16,7 +16,6 @@ img {
 .container {
   width: 100%;
   max-width: 600px;
-  border: 1px dashed #ccc;
   margin: 0 auto;
   padding: 15px 15px 20px 15px;
   font-size: 14px;
@@ -151,6 +150,10 @@ input[type=number] {
   font-weight: bold;
   border-radius: 5px;
   font-size: 14px;
+}
+
+.diners .button.remove {
+  background-color: #ec554f;
 }
 
 .sharing-plates {

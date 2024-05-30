@@ -3,7 +3,7 @@ const dinersList = document.querySelector(".diners-list");
 
 // individual diner data
 let numOfDiners = 1;
-let numOfItemsPerDiner = {1: 1}; // track the number of items for each diner
+let numOfItemsPerDiner = { 1: 1 }; // track the number of items for each diner
 
 // sharing plates data
 let numOfSharingPlates = 1;
@@ -71,6 +71,7 @@ function addDiner(numOfDiners) {
     minusImg.src = "images/icon-minus.svg";
     minusImg.alt = "";
     minusBtn.appendChild(minusImg);
+
     // append buttons to div
     plusMinusBtnsDiv.appendChild(plusBtn);
     plusMinusBtnsDiv.appendChild(minusBtn);
@@ -103,7 +104,7 @@ function plusIndivPlate(dinerId, itemId) {
         for (let i = numOfItemsPerDiner[dinerId]; i > itemId; i--) {
             const divToMove = document.querySelector(`.item.diner-${dinerId}.item-${i}`);
             divToMove.classList = `item diner-${dinerId} item-${i + 1}`;
-            
+
             const classesToMove = document.querySelectorAll(`.diner-${dinerId}.item-${i}`);
             classesToMove.forEach(e => {
                 e.classList.replace(`item-${i}`, `item-${i + 1}`);
@@ -162,7 +163,7 @@ function plusIndivPlate(dinerId, itemId) {
     currItemDiv.appendChild(foodNameDiv);
     currItemDiv.appendChild(foodPriceDiv);
     currItemDiv.appendChild(plusMinusIndivBtnsDiv);
-    
+
     const refNode = document.querySelector(`.item.diner-${dinerId}.item-${itemId + 2}`);
     currDinerIndivListDiv.insertBefore(currItemDiv, refNode);
 
@@ -181,17 +182,17 @@ function minusIndivPlate(dinerId, itemId) {
     removeIndivPlateDiv.remove();
 
     // if removed section is not in last row, move other rows forward
-     if (itemId < numOfItemsPerDiner[dinerId] + 1) {
+    if (itemId < numOfItemsPerDiner[dinerId] + 1) {
         for (let i = itemId + 1; i <= numOfItemsPerDiner[dinerId] + 1; i++) {
             const divToMove = document.querySelector(`.item.diner-${dinerId}.item-${i}`);
             divToMove.classList = `item diner-${dinerId} item-${i - 1}`;
-            
+
             const classesToMove = document.querySelectorAll(`.diner-${dinerId}.item-${i}`);
             classesToMove.forEach(e => {
                 e.classList.replace(`item-${i}`, `item-${i - 1}`);
             });
         }
-     }
+    }
 
     // toggle disabled state on minus button
     const minusBtns = document.querySelectorAll(`.circle-btn.indiv-minus.diner-${dinerId}`);
@@ -213,7 +214,7 @@ function plusSharedPlate(clickedSharingPlusID) {
         for (let i = numOfSharingPlates - 1; i > clickedSharingPlusID; i--) {
             const divToMove = document.querySelector(`#sharing-${i}`);
             divToMove.id = `sharing-${i + 1}`;
-            
+
             const classesToMove = divToMove.querySelectorAll(`.sharing-${i}`);
             classesToMove.forEach(e => {
                 e.classList.replace(`sharing-${i}`, `sharing-${i + 1}`);
@@ -351,7 +352,7 @@ function calculateSharedShare() {
     const sharedPlatePrices = document.querySelectorAll(".sharing-list .item .price input");
     sharedPlatePrices.forEach(input => {
         const price = input.value.trim();
-        if (price !== "") { 
+        if (price !== "") {
             totalSharedPrice += parseFloat(price);
         }
     });
@@ -381,11 +382,11 @@ function displayResults(sharedShare, dinerDict) {
         const serviceChargeCheckbox = document.querySelector("#service-charge");
 
         if (gstCheckbox.checked == true && serviceChargeCheckbox.checked == true) {
-            indivTotal = (indivTotal * (1 + gst/100) * (1 + serviceCharge/100)).toFixed(2);
+            indivTotal = (indivTotal * (1 + gst / 100) * (1 + serviceCharge / 100)).toFixed(2);
         } else if (gstCheckbox.checked == true) {
-            indivTotal = (indivTotal * (1 + gst/100)).toFixed(2);
+            indivTotal = (indivTotal * (1 + gst / 100)).toFixed(2);
         } else if (serviceChargeCheckbox.checked == true) {
-            indivTotal = (indivTotal * (1 + serviceCharge/100)).toFixed(2);
+            indivTotal = (indivTotal * (1 + serviceCharge / 100)).toFixed(2);
         }
 
 
@@ -393,7 +394,7 @@ function displayResults(sharedShare, dinerDict) {
         const resultsItemDiv = document.createElement("div");
         resultsItemDiv.className = "item";
 
-        const resultsItemName =  document.createElement("div");
+        const resultsItemName = document.createElement("div");
         resultsItemName.className = "name";
         resultsItemName.textContent = dinerName;
 
@@ -403,7 +404,7 @@ function displayResults(sharedShare, dinerDict) {
 
         resultsItemDiv.appendChild(resultsItemName);
         resultsItemDiv.appendChild(resultsItemTotal);
-        
+
         resultsSection.appendChild(resultsItemDiv);
     });
 }
@@ -416,7 +417,7 @@ document.addEventListener("click", (event) => {
     // plus indiv
     const clickedIndivPlus = event.target.closest(".indiv-plus");
     if (clickedIndivPlus) {
-        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);        
+        const [_, dinerId, itemId] = clickedIndivPlus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
         plusIndivPlate(dinerId, itemId);
     }
 
@@ -443,7 +444,7 @@ document.addEventListener("click", (event) => {
 });
 
 
-addDinerBtn.addEventListener("click", () => {    
+addDinerBtn.addEventListener("click", () => {
     numOfDiners++;
     addDiner(numOfDiners);
 });
