@@ -14,7 +14,7 @@ const gst = 9;
 const serviceCharge = 10;
 
 // buttons
-const addDinerBtn = document.querySelector(".diners .add-diner .button");
+const addDinerBtn = document.querySelector(".diners .add-diner .add");
 
 // add new diner
 function addDiner(numOfDiners) {
