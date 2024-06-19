@@ -48,8 +48,8 @@ input[type=number] {
   flex-wrap: wrap;
 }
 
-.plus-minus-indiv,
-.plus-minus-sharing {
+.indiv-plus-minus,
+.sharing-plus-minus {
   display: flex;
   align-items: center;
   width: 55px;
@@ -99,8 +99,8 @@ input[type=number] {
   width: calc(47% - 55px);
 }
 
-.plus-minus-indiv .circle-btn,
-.plus-minus-sharing .circle-btn {
+.indiv-plus-minus .circle-btn,
+.sharing-plus-minus .circle-btn {
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -113,36 +113,36 @@ input[type=number] {
   background-color: #6ec757;
 }
 
-.plus-minus-indiv .indiv-plus,
-.plus-minus-sharing .sharing-plus {
+.indiv-plus-minus .indiv-plus,
+.sharing-plus-minus .sharing-plus {
   background-color: #6ec757;
 }
 
-.plus-minus-indiv .indiv-minus,
-.plus-minus-sharing .sharing-minus {
+.indiv-plus-minus .indiv-minus,
+.sharing-plus-minus .sharing-minus {
   background-color: #ec554f;
 }
 
-.plus-minus-indiv .indiv-minus.disabled,
-.plus-minus-sharing .sharing-minus.disabled {
+.indiv-plus-minus .indiv-minus.disabled,
+.sharing-plus-minus .sharing-minus.disabled {
   pointer-events: none;
   background-color: #ccc;
 }
 
-.plus-minus-indiv .circle-btn img,
-.plus-minus-sharing .circle-btn img {
+.indiv-plus-minus .circle-btn img,
+.sharing-plus-minus .circle-btn img {
   width: 10px;
   display: block;
 }
 
-.diners .add-diner {
+.diners .diner-plus {
   background-color: #fff;
   margin: 0px 0px 20px -15px;
   text-align: right;
   cursor: pointer;
 }
 
-.diners .add-diner .button {
+.diners .diner-plus .button {
   padding: 10px 15px;
   background-color: #6ec757;
   display: inline-block;
@@ -153,12 +153,21 @@ input[type=number] {
   font-size: 14px;
 }
 
-.diner .remove-diner {
+.diner .diner-minus {
   position: absolute;
   top: -9px;
   right: -8px;
-  height: 10px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  
+  background: #ec554f;
+}
+
+.diner .diner-minus.disabled {
+  pointer-events: none;
+  background: #ccc;
 }
 
 .sharing-plates {

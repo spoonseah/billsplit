@@ -14,13 +14,21 @@ const gst = 9;
 const serviceCharge = 10;
 
 // buttons
-const addDinerBtn = document.querySelector(".diners .add-diner .add");
+const dinerPlusBtn = document.querySelector(".diners .diner-plus .add");
 
 // add new diner
-function addDiner(numOfDiners) {
+function dinerPlus(numOfDiners) {
     const currDinerSection = document.createElement("section");
     currDinerSection.className = "diner";
     currDinerSection.id = `diner-${numOfDiners}`;
+
+    // create remove diner div
+    const minusDinerDiv = document.createElement("div");
+    minusDinerDiv.className = "diner-minus";
+    const minusDinerImg = document.createElement("img");
+    minusDinerImg.src = "images/icon-remove.svg";
+    minusDinerImg.alt = "";
+    minusDinerDiv.appendChild(minusDinerImg);
 
     // create diner name div
     const dinerNameDiv = document.createElement("div");
@@ -56,7 +64,7 @@ function addDiner(numOfDiners) {
 
     // plus and minus buttons
     const plusMinusBtnsDiv = document.createElement("div");
-    plusMinusBtnsDiv.className = "plus-minus-indiv";
+    plusMinusBtnsDiv.className = "indiv-plus-minus";
     // plus button
     const plusBtn = document.createElement("div");
     plusBtn.className = `circle-btn indiv-plus diner-${numOfDiners} item-1`;
@@ -85,7 +93,8 @@ function addDiner(numOfDiners) {
     // append .item to .indiv-list
     indivListDiv.appendChild(indivItem);
 
-    // append .name and .indiv-list to .diner
+    // append .diner-minus, .name and .indiv-list to .diner
+    currDinerSection.appendChild(minusDinerDiv);
     currDinerSection.appendChild(dinerNameDiv);
     currDinerSection.appendChild(indivListDiv);
 
@@ -94,6 +103,33 @@ function addDiner(numOfDiners) {
 
     // initialise number of items for this diner
     numOfItemsPerDiner[numOfDiners] = 1;
+}
+
+function minusDiner(dinerId) {
+    // delete diner section
+    const dinerToMinus = document.querySelector(`#${dinerId}`);
+    dinerToMinus.remove();
+
+    // if removed diner is not the last, update diner IDs for subsequent diners
+    const currDiner = parseInt((dinerId.match(/diner-(\d+)/))[1], 10);
+    if (currDiner < numOfDiners + 1) {
+        for (let i = currDiner + 1; i <= numOfDiners + 1; i++) {
+            console.log("in for");
+            const sectionToMove = document.querySelector(`#diner-${i}`);
+            sectionToMove.id = `diner-${i - 1}`;
+
+            const classesToMove = sectionToMove.querySelectorAll(`.diner-${i}`);
+            classesToMove.forEach(classToMove => {
+                classToMove.classList.replace(`diner-${i}`, `diner-${i - 1}`);
+            })
+        }
+    }
+
+    // disable if only one diner left
+    if (numOfDiners == 1) {
+        const minusDinerBtn = document.querySelector(".diner-minus");
+        minusDinerBtn.classList.add("disabled");
+    }
 }
 
 function plusIndivPlate(dinerId, itemId) {
@@ -106,8 +142,8 @@ function plusIndivPlate(dinerId, itemId) {
             divToMove.classList = `item diner-${dinerId} item-${i + 1}`;
 
             const classesToMove = document.querySelectorAll(`.diner-${dinerId}.item-${i}`);
-            classesToMove.forEach(e => {
-                e.classList.replace(`item-${i}`, `item-${i + 1}`);
+            classesToMove.forEach(classToMove => {
+                classToMove.classList.replace(`item-${i}`, `item-${i + 1}`);
             });
         }
     }
@@ -139,7 +175,7 @@ function plusIndivPlate(dinerId, itemId) {
 
     // plus minus indiv
     const plusMinusIndivBtnsDiv = document.createElement("div");
-    plusMinusIndivBtnsDiv.className = `plus-minus-indiv`;
+    plusMinusIndivBtnsDiv.className = `indiv-plus-minus`;
     // plus button
     const plusIndivBtn = document.createElement("div");
     plusIndivBtn.className = `circle-btn indiv-plus diner-${dinerId} item-${newItemId}`;
@@ -188,8 +224,8 @@ function minusIndivPlate(dinerId, itemId) {
             divToMove.classList = `item diner-${dinerId} item-${i - 1}`;
 
             const classesToMove = document.querySelectorAll(`.diner-${dinerId}.item-${i}`);
-            classesToMove.forEach(e => {
-                e.classList.replace(`item-${i}`, `item-${i - 1}`);
+            classesToMove.forEach(classToMove => {
+                classToMove.classList.replace(`item-${i}`, `item-${i - 1}`);
             });
         }
     }
@@ -216,8 +252,8 @@ function plusSharedPlate(clickedSharingPlusID) {
             divToMove.id = `sharing-${i + 1}`;
 
             const classesToMove = divToMove.querySelectorAll(`.sharing-${i}`);
-            classesToMove.forEach(e => {
-                e.classList.replace(`sharing-${i}`, `sharing-${i + 1}`);
+            classesToMove.forEach(classToMove => {
+                classToMove.classList.replace(`sharing-${i}`, `sharing-${i + 1}`);
             });
         }
     }
@@ -250,7 +286,7 @@ function plusSharedPlate(clickedSharingPlusID) {
 
     // plus minus sharing
     const plusMinusSharingBtnsDiv = document.createElement("div");
-    plusMinusSharingBtnsDiv.className = `plus-minus-sharing sharing-${clickedSharingPlusID + 1}`;
+    plusMinusSharingBtnsDiv.className = `sharing-plus-minus sharing-${clickedSharingPlusID + 1}`;
     // plus button
     const plusSharingBtn = document.createElement("div");
     plusSharingBtn.className = `circle-btn sharing-plus sharing-${clickedSharingPlusID + 1}`;
@@ -299,8 +335,8 @@ function minusSharedPlate(clickedSharingMinusID) {
             divToMove.id = `sharing-${i - 1}`;
 
             const classesToMove = divToMove.querySelectorAll(`.sharing-${i}`);
-            classesToMove.forEach(e => {
-                e.classList.replace(`sharing-${i}`, `sharing-${i - 1}`);
+            classesToMove.forEach(classToMove => {
+                classToMove.classList.replace(`sharing-${i}`, `sharing-${i - 1}`);
             });
         }
     }
@@ -414,6 +450,18 @@ document.addEventListener("input", () => {
 })
 
 document.addEventListener("click", (event) => {
+    // minus diner
+    const clickedDinerMinus = event.target.closest(".diner-minus");
+    if (clickedDinerMinus) {
+        const dinerSection = event.target.closest('section.diner');
+        if (dinerSection) {
+            numOfDiners--;
+            const dinerId = dinerSection.id;
+            minusDiner(dinerId);
+        }
+        mapPlates();
+    }
+
     // plus indiv
     const clickedIndivPlus = event.target.closest(".indiv-plus");
     if (clickedIndivPlus) {
@@ -444,7 +492,13 @@ document.addEventListener("click", (event) => {
 });
 
 
-addDinerBtn.addEventListener("click", () => {
+dinerPlusBtn.addEventListener("click", () => {
     numOfDiners++;
-    addDiner(numOfDiners);
+    dinerPlus(numOfDiners);
+
+    // remove disabled state on the remove diner buttons
+    const minusDinerBtns = document.querySelectorAll(".diner-minus");
+    minusDinerBtns.forEach(btn => {
+        btn.classList.remove("disabled");
+    })
 });
