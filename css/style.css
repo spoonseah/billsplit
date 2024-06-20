@@ -153,19 +153,6 @@ input[type=number] {
   font-size: 14px;
 }
 
-/* .diner .diner-minus {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  position: absolute;
-  top: -12.5px;
-  right: -12.5px;
-  color: #fff;
-  font-size: 22px;
-  cursor: pointer;
-  background-color: #ec554f;
-} */
-
 .diner .diner-minus {
   position: absolute;
   top: -12.5px;
