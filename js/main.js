@@ -474,6 +474,7 @@ document.addEventListener("click", (event) => {
     if (clickedIndivMinus) {
         const [_, dinerId, itemId] = clickedIndivMinus.className.match(/diner-(\d+)\sitem-(\d+)/).map(Number);
         minusIndivPlate(dinerId, itemId);
+        mapPlates();
     }
 
     // plus sharing
@@ -488,6 +489,7 @@ document.addEventListener("click", (event) => {
     if (clickedSharingMinus) {
         const sharingId = parseInt(clickedSharingMinus.className.match(/sharing-(\d+)/)[1]);
         minusSharedPlate(sharingId);
+        mapPlates();
     }
 });
 
